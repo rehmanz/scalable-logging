@@ -19,11 +19,20 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
+        run: psql --version
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Check psql version
-        run: psql --version
+      - uses: actions/setup-python@v1
+          with:
+            python-version: 3.8
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pipenv wheel
+          pipenv --version
+
+
 
