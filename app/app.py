@@ -1,3 +1,5 @@
+
+
 from flask import Flask, request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -48,7 +50,7 @@ def index(_):
 
 @app.route("/hello")
 def hello():
-    return 'hello'
+    return 'Hello World!'
 
 @app.route("/_healthz")
 def health():
