@@ -1,2 +1,2 @@
 # scalable-logging
-Scalable Logging
+Scalable Logging Exercise
