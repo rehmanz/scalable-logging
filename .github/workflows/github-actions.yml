@@ -19,7 +19,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-        run: psql --version
 
     steps:
       - name: Check out repository code
