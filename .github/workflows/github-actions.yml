@@ -35,9 +35,6 @@ jobs:
 
           pushd app
           pipenv install --dev
-
-      - name: Run pre-commit checks
-        run: |
-          pipenv shell
           pip freeze
+          which python
           pipenv run pre-commit run --all-files
