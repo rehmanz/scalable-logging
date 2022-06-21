@@ -48,10 +48,6 @@ def index(_):
     return json.dumps(ret)
 
 
-@app.route("/hello")
-def hello():
-    return 'Hello World!'
-
 @app.route("/_healthz")
 def health():
     return json.dumps({"status": "HEALTHY", "count": AccessEntry.query.count()})
