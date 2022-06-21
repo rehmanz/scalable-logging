@@ -37,4 +37,6 @@ jobs:
           pipenv install
 
       - name: Run pre-commit checks
-        run: pipenv run pre-commit run --all-files
+        run: |
+          pip freeze
+          pipenv run pre-commit run --all-files

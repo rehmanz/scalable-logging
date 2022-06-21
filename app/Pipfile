@@ -4,13 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest = "*"
-pre-commit = "*"
+pytest = "7.1.2"
+pre-commit = "2.19.0"
 
 [packages]
-flask = "*"
-flask-migrate = "*"
-flask-sqlalchemy = "*"
+flask = "2.1.2"
+flask-migrate = "3.1.0"
+flask-sqlalchemy = "2.5.1"
 
 [requires]
 python_version = "3.8"
