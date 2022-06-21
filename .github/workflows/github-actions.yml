@@ -34,7 +34,7 @@ jobs:
           pipenv --version
 
           pushd app
-          pipenv install
+          pipenv install --dev
 
       - name: Run pre-commit checks
         run: |
