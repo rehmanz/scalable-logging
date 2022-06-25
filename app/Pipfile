@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 pytest = "7.1.2"
 pre-commit = "2.19.0"
-pytest-httpserver="1.0.4"
 pytest-rerunfailures="10.2"
 
 [packages]

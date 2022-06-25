@@ -26,14 +26,10 @@ jobs:
           popd
       - name: Bring up app and db containers
         run: |
-          pushd tests
           docker-compose up -d
-          popd
       - name: Run unit tests
         run: |
-          pipenv run pytest --reruns 15 --reruns-delay 15
+          pipenv run pytest --reruns 5 --reruns-delay 5
       - name: Cleanup app and db containers
         run: |
-          pushd tests
           docker-compose down
-          popd

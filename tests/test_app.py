@@ -1,24 +1,19 @@
-import pytest
+import http.client
 
-from urllib.request import urlopen
+def test_get_health_endpoint():
+    conn = http.client.HTTPConnection("localhost", 5000)
+    payload = ''
+    headers = {}
+    conn.request("GET", "/_healthz", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    assert "HEALTHY" in data.decode("utf-8")
 
-@pytest.fixture(scope="session")
-def httpserver_listen_address():
-    return ("localhost", 5000)
-
-
-def test_get_app_endpoint(httpserver):
-    body = "user_agent"
-    endpoint = ""
-    httpserver.expect_request(endpoint).respond_with_data(body)
-    with urlopen(httpserver.url_for(endpoint)) as response:
-        result = response.read().decode()
-    assert body in result
-
-def test_get_healthz_endpoint(httpserver):
-    body = "HEALTH"
-    endpoint = "/_healthz"
-    httpserver.expect_request(endpoint).respond_with_data(body)
-    with urlopen(httpserver.url_for(endpoint)) as response:
-        result = response.read().decode()
-    assert body in result
+def test_get_root_endpoint():
+    conn = http.client.HTTPConnection("localhost", 5000)
+    payload = ''
+    headers = {}
+    conn.request("GET", "", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    assert "user_agent" in data.decode("utf-8")
