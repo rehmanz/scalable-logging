@@ -28,11 +28,10 @@ jobs:
         run: |
           pushd tests
           docker-compose up -d
-          sleep 10
           popd
       - name: Run unit tests
         run: |
-          pipenv run pytest --reruns 5 --reruns-delay 5
+          pipenv run pytest --reruns 15 --reruns-delay 15
       - name: Cleanup app and db containers
         run: |
           pushd tests
