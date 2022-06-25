@@ -27,14 +27,16 @@ jobs:
           pushd app
           docker build -t app .
           popd
-      - name: Run integration test
+      - name: Bring up app and db containers
         run: |
           pushd tests
-          docker-compose up &
-
+          docker-compose up
+          popd
+      - name: Bring up app and db containers
+        run: |
+          pushd tests
           echo "Testing the application"
           curl http://127.0.0.1:5000 | grep -q 'user_agent' && echo "PASSED"
           curl http://127.0.0.1:5000/_healthz | grep -q 'HEALTHY' && echo "PASSED"
-
           docker-compose down
           popd
