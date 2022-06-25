@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../app')
+
 from app import __version__
 
 def test_version():
