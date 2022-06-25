@@ -19,9 +19,6 @@ jobs:
       - name: Run pre-commit checks
         run: |
           pipenv run pre-commit run --all-files
-      - name: Run unit tests
-        run: |
-          pipenv run pytest
       - name: Build the app container
         run: |
           pushd app
@@ -33,9 +30,6 @@ jobs:
           docker-compose up -d
           sleep 10
           popd
-      - name: Run integration tests
-        run: |
-          pushd tests
-          curl http://127.0.0.1:5000 | grep -q 'user_agent' || exit 1
-          curl http://127.0.0.1:5000/_healthz | grep -q 'HEALTHY' || exit 1
-          popd
+      - name: Run unit tests
+          run: |
+            pipenv run pytest --reruns 5 --reruns-delay 5
