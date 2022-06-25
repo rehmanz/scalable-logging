@@ -22,8 +22,17 @@ jobs:
       - name: Run unit tests
         run: |
           pipenv run pytest
+      - name: Build the app container
+        run: |
+          docker build -t app .
       - name: Run integration test
         run: |
           pushd tests
-          which docker-compose
+          docker-compose up &
+
+          echo "Testing the application"
+          curl http://127.0.0.1:5000 | grep -q 'user_agent' && echo "PASSED"
+          curl http://127.0.0.1:5000/_healthz | grep -q 'HEALTHY' && echo "PASSED"
+
+          docker-compose down
           popd
