@@ -31,11 +31,11 @@ jobs:
         run: |
           pushd tests
           docker-compose up -d
+          sleep 10
           popd
       - name: Run integration tests
         run: |
           pushd tests
-          curl http://127.0.0.1:5000 | grep -q 'user_agent' && echo "PASSED"
-          curl http://127.0.0.1:5000/_healthz | grep -q 'HEALTHY' && echo "PASSED"
-          docker-compose down
+          curl http://127.0.0.1:5000 | grep -q 'user_agent' || exit 1
+          curl http://127.0.0.1:5000/_healthz | grep -q 'HEALTHY' || exit 1
           popd
