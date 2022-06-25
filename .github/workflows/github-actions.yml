@@ -31,5 +31,5 @@ jobs:
           sleep 10
           popd
       - name: Run unit tests
-          run: |
-            pipenv run pytest --reruns 5 --reruns-delay 5
+        run: |
+          pipenv run pytest --reruns 5 --reruns-delay 5
