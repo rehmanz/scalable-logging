@@ -5,21 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
-    services:
-      db_service:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: postgres
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -34,6 +19,17 @@ jobs:
       - name: Run pre-commit checks
         run: |
           pipenv run pre-commit run --all-files
+      - name: Build the app container
+        run: |
+          pushd app
+          docker build -t app .
+          popd
+      - name: Bring up app and db containers
+        run: |
+          docker-compose up -d
       - name: Run unit tests
         run: |
-          pipenv run pytest
+          pipenv run pytest --reruns 5 --reruns-delay 5
+      - name: Cleanup app and db containers
+        run: |
+          docker-compose down

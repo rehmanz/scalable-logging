@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -54,7 +52,7 @@ def health():
 
 
 def main():
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
 
 
 if __name__ == "__main__":
