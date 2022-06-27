@@ -42,7 +42,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Build, test and push the container to ECR
+      - name: Push the app container to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: scalable-logging
@@ -50,7 +50,7 @@ jobs:
           pushd app
 
           #TODO: Need to incorporate proper versioning
-          export IMAGE_TAG=`latest`
+          export IMAGE_TAG="latest"
           echo "Release tag is ${IMAGE_TAG}"
 
           echo "Building and deploying the container locally."
