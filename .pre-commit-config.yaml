@@ -21,6 +21,3 @@ repos:
   hooks:
     - id: terraform-fmt
     - id: terraform-validate
-    - id: shellcheck
-    - id: gofmt
-    - id: golint
