@@ -58,10 +58,6 @@ jobs:
 
           echo "Pushing the container to ECR."
           docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
-
-          echo "Container cleanup."
-          docker stop $(docker ps -a -q)
-          docker rm $(docker ps -a -q)
           popd
 
   deploy_app:
