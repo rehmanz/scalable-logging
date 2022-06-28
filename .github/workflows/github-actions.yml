@@ -19,20 +19,20 @@ jobs:
       - name: Run pre-commit checks
         run: |
           pipenv run pre-commit run --all-files
-      - name: Build the app container
-        run: |
-          pushd app
-          docker build -t app .
-          popd
-      - name: Bring up app and db containers
-        run: |
-          docker-compose up -d
-      - name: Run unit tests
-        run: |
-          pipenv run pytest --reruns 5 --reruns-delay 5
-      - name: Cleanup app and db containers
-        run: |
-          docker-compose down
+#      - name: Build the app container
+#        run: |
+#          pushd app
+#          docker build -t app .
+#          popd
+#      - name: Bring up app and db containers
+#        run: |
+#          docker-compose up -d
+#      - name: Run unit tests
+#        run: |
+#          pipenv run pytest --reruns 5 --reruns-delay 5
+#      - name: Cleanup app and db containers
+#        run: |
+#          docker-compose down
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
