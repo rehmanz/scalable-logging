@@ -1,5 +1,9 @@
 locals {
   account_id = data.aws_caller_identity.current.account_id
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
 }
 # ------------------------------------------------------------------------------
 # CONFIGURE VPC
@@ -15,38 +19,17 @@ module "vpc" {
   private_subnets = var.private_subnet_cidr_blocks
   public_subnets  = var.public_subnet_cidr_blocks
 
-  enable_nat_gateway = true
-  enable_vpn_gateway = true
+  enable_nat_gateway   = true
+  enable_vpn_gateway   = true
+  enable_dns_hostnames = true
+  enable_dns_support   = true
 
-  tags = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
+  tags = local.tags
 }
 
 # ------------------------------------------------------------------------------
 # DEFINE SECURITY GROUPS
 # ------------------------------------------------------------------------------
-resource "aws_security_group" "postgres_sg" {
-  name        = "postgres-sg"
-  description = "Postgres Database security group."
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = 5432
-    to_port     = 5432
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    protocol    = "-1"
-    from_port   = 0
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-sg"
   description = "ECS security group for the Application Load Balancer"

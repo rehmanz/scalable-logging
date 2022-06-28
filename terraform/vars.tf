@@ -28,6 +28,15 @@ variable "private_subnet_cidr_blocks" {
   ]
 }
 
+variable "database_subnet_cidr_blocks" {
+  description = "Available cidr blocks for database subnets"
+  type        = list(string)
+  default = [
+    "10.0.201.0/24",
+    "10.0.203.0/24"
+  ]
+}
+
 variable "availability_zones" {
   description = "AWS Availability Zones"
   type        = list(string)
@@ -37,30 +46,20 @@ variable "availability_zones" {
   ]
 }
 
-variable "master_username" {
-  description = "The username for the master user. This MUST to be set as the environment variable TF_VAR_master_username so you don't check it into source control."
+variable "db_name" {
+  description = "The name for the DB user. This MUST be set as the environment variable TF_VAR_db_name so you don't check it into source control."
   type        = string
+  sensitive   = true
 }
 
-variable "master_password" {
-  description = "The password for the master user. This MUST be set as the environment variable TF_VAR_master_password so you don't check it into source control."
+variable "db_username" {
+  description = "The username for the master DB user. This MUST to be set as the environment variable TF_VAR_db_username so you don't check it into source control."
   type        = string
+  sensitive   = true
 }
 
-variable "postgres_engine_version" {
-  description = "The Postgres engine version to use."
+variable "db_password" {
+  description = "The password for the master DB user. This MUST be set as the environment variable TF_VAR_db_password so you don't check it into source control."
   type        = string
-  default     = "11"
-}
-
-variable "enabled_cloudwatch_logs_exports" {
-  description = "List of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values are: postgresql and upgrade."
-  type        = list(string)
-  default     = []
-}
-
-variable "iam_database_authentication_enabled" {
-  description = "Specifies whether IAM database authentication is enabled. This option is only available for MySQL and PostgreSQL engines."
-  type        = bool
-  default     = true
+  sensitive   = true
 }
