@@ -11,7 +11,7 @@ resource "aws_security_group" "rds" {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.vpc_cidr_block]
   }
 
   egress {
@@ -36,7 +36,7 @@ resource "aws_db_parameter_group" "slogging_db" {
 
 resource "aws_db_subnet_group" "slogging_db" {
   name       = local.name
-  subnet_ids = module.vpc.public_subnets
+  subnet_ids = module.vpc.private_subnets
 
   tags = local.tags
 }
@@ -53,7 +53,7 @@ resource "aws_db_instance" "slogging_db" {
   db_subnet_group_name   = aws_db_subnet_group.slogging_db.name
   vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.slogging_db.name
-  publicly_accessible    = true
+  publicly_accessible    = false
   skip_final_snapshot    = true
 
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
