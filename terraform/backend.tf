@@ -1,5 +1,9 @@
+terraform {
+  required_version = ">= v1.1.7"
+}
+
 provider "aws" {
-  region = "us-west-2"
+  region = var.aws_region
 }
 
 terraform {
