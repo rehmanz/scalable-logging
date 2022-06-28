@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 import json
+import logging
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,6 +20,11 @@ class AccessEntry(db.Model):
     access_time = db.Column(db.DateTime, default=datetime.utcnow)
     path = db.Column(db.String(1024))
 
+@app.route("/")
+def hello():
+    message = "Hello World!"
+    logging.info(message)
+    return message
 
 @app.errorhandler(404)
 def index(_):
@@ -52,6 +58,7 @@ def health():
 
 
 def main():
+    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
     app.run(host='0.0.0.0', port=5000)
 
 

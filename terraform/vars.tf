@@ -63,3 +63,45 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "log_retention_in_days" {
+  description = "Log retention in days"
+  type        = number
+  default     = 7
+}
+
+variable "service_name" {
+  description = "ECS service name"
+  type        = string
+  default     = "scalable-logging"
+}
+
+variable "ecs_image_url" {
+  description = "The desired ECR image URL"
+  type        = string
+  default     = "973671727312.dkr.ecr.us-west-2.amazonaws.com/scalable-logging:latest"
+}
+
+variable "ecs_volume" {
+  description = "ECS volume name"
+  type        = string
+  default     = "ecs-volume"
+}
+
+variable "instance_type" {
+  description = "EC2 instance type for ECS launch configuration"
+  type        = string
+  default     = "t3.small"
+}
+
+variable "desired_capacity" {
+  description = "Number of instances to launch in the ECS cluster"
+  type        = number
+  default     = 1
+}
+
+variable "maximum_capacity" {
+  description = "Maximum number of instances that can be launched in the ECS cluster"
+  type        = number
+  default     = 1
+}
