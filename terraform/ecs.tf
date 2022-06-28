@@ -21,17 +21,10 @@ resource "aws_security_group" "ecs_sg" {
   }
 
   ingress {
-    protocol    = "tcp"
-    from_port   = 5432
-    to_port     = 5432
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = 5000
-    to_port     = 5000
-    cidr_blocks = ["0.0.0.0/0"]
+    protocol  = "tcp"
+    from_port = 31000
+    to_port   = 61000
+    self      = true
   }
 
   egress {
@@ -55,6 +48,16 @@ resource "aws_lb" "main" {
   enable_deletion_protection = false
 }
 
+resource "aws_lb_listener" "alb_listener" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = 80
+  protocol          = "HTTP"
+  default_action {
+    target_group_arn = aws_lb_target_group.ecs_lb_target_group.arn
+    type             = "forward"
+  }
+}
+
 resource "aws_lb_target_group" "ecs_lb_target_group" {
   name     = "ecs-target-group"
   port     = 5000
@@ -64,21 +67,11 @@ resource "aws_lb_target_group" "ecs_lb_target_group" {
   health_check {
     path                = "/"
     protocol            = "HTTP"
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 2
-    interval            = 10
+    healthy_threshold   = 10
+    unhealthy_threshold = 10
+    timeout             = 20
+    interval            = 30
     matcher             = "200"
-  }
-}
-
-resource "aws_lb_listener" "alb_listener" {
-  load_balancer_arn = aws_lb.main.arn
-  port              = 80
-  protocol          = "HTTP"
-  default_action {
-    target_group_arn = aws_lb_target_group.ecs_lb_target_group.arn
-    type             = "forward"
   }
 }
 
@@ -94,7 +87,7 @@ resource "aws_cloudwatch_log_group" "ecs_logs" {
 # CONFIGURE ECS SERVICE
 # ------------------------------------------------------------------------------
 resource "aws_ecs_task_definition" "ecs_task_definition" {
-  family = var.service_name
+  family = "${var.service_name}-app"
   container_definitions = jsonencode([
     {
       name : "scalable-logging"
@@ -106,7 +99,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         "logDriver" : "awslogs"
         "options" : {
           "awslogs-group" : "ecs-logs"
-          "awslogs-region" : "us-west-2"
+          "awslogs-region" : var.aws_region
           "awslogs-stream-prefix" : "ecs-slogging-app"
         }
       },

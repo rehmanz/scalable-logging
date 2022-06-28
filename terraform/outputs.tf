@@ -19,3 +19,8 @@ output "db_password" {
   value       = aws_db_instance.slogging_db.password
   sensitive   = true
 }
+
+output "app_dns_name" {
+  description = "Application DNS name"
+  value       = aws_lb.main.dns_name
+}

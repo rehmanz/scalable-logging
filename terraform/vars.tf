@@ -91,7 +91,7 @@ variable "ecs_volume" {
 variable "instance_type" {
   description = "EC2 instance type for ECS launch configuration"
   type        = string
-  default     = "t3.small"
+  default     = "m5.large"
 }
 
 variable "desired_capacity" {
