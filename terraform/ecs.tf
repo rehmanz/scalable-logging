@@ -67,10 +67,10 @@ resource "aws_lb_target_group" "ecs_lb_target_group" {
   health_check {
     path                = "/"
     protocol            = "HTTP"
-    healthy_threshold   = 10
-    unhealthy_threshold = 10
-    timeout             = 20
-    interval            = 30
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 2
+    interval            = 15
     matcher             = "200"
   }
 }

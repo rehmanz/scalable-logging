@@ -103,5 +103,5 @@ variable "desired_capacity" {
 variable "maximum_capacity" {
   description = "Maximum number of instances that can be launched in the ECS cluster"
   type        = number
-  default     = 1
+  default     = 5
 }

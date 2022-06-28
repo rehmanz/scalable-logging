@@ -33,8 +33,6 @@ def index(_):
         db.session.add(entry)
         db.session.commit()
     except Exception as e:
-        msg = "Unable to add record: %s" %e
-        logging.error(msg)
         raise Exception("Unable to add record in database")
 
 
