@@ -117,7 +117,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
       environment : [
         {
           name : "DATABASE_URL"
-          value : "${var.db_username}:${var.db_password}@postgresql://${aws_db_instance.slogging_db.address}:${aws_db_instance.slogging_db.port}/${var.db_name}"
+          value : "postgresql://${var.db_username}:${var.db_password}@${aws_db_instance.slogging_db.address}:${aws_db_instance.slogging_db.port}/${var.db_name}"
         }
       ]
     }
