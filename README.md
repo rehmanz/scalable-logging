@@ -4,7 +4,7 @@
 
 * [Pipenv](https://pipenv.pypa.io/en/latest/) is used to manage the application dependencies and unit tests
 * API is containerized and stored in Amazon Elastic Container Registry (ECR)
-* Application is deployed in AWS Elastic Container Service (ECS) and uses Postgres database as the backend
+* [Application](http://ecs-alb-461326369.us-west-2.elb.amazonaws.com/) is deployed in AWS Elastic Container Service (ECS) and uses Postgres database as the backend
 * Application logs are stored in Cloud Watch
 
 ## Build & Deployment Pipeline
