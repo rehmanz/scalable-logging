@@ -13,13 +13,13 @@ The API is built and deployed using GitHub [Actions](https://github.com/rehmanz/
 
 #### Stage: build_app
 * The prre-commit checks are performed and unit tests are run using docker compose
-* Container is build and the image to a predefined AWS Elastic Container Registry is pushed
+* Container is built and the image to a predefined AWS Elastic Container Registry is pushed
 
 #### Stage: deploy_app
 * Terraform plan and apply is run to update the infrastructure
-* API and Postgres database is deployed using Terraform. A secure S3 backend keeps track of the infrastructure state files.
+* API, Postgres database and related infrastructure is deployed using Terraform. A secure S3 backend keeps track of the infrastructure state files.
 
 ## Security Considerations
-* Secrets are stored securely as environment variables in local and as secrets in GitHub Actions
+* Secrets are stored securely as environment variables in local environment and as secrets in GitHub Actions
 * Application is only accessible via a load balancer
 * Direct access to database is not allowed
