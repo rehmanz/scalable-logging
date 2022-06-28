@@ -20,7 +20,7 @@ class AccessEntry(db.Model):
     access_time = db.Column(db.DateTime, default=datetime.utcnow)
     path = db.Column(db.String(1024))
 
-@app.route("/hello")
+@app.route("/")
 def hello():
     message = "Hello World!"
     logging.info(message)
