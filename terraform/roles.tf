@@ -69,17 +69,10 @@ resource "aws_iam_role" "ec2_role" {
             "logs:CreateLogStream",
             "logs:PutLogEvents",
             "logs:DescribeLogStreams",
-            "dynamodb:Query",
-            "dynamodb:Scan",
-            "dynamodb:GetItem",
-            "dynamodb:PutItem",
-            "dynamodb:UpdateItem",
-            "dynamodb:DeleteItem"
           ]
           Effect = "Allow"
           Resource = [
             "arn:aws:logs:*:*:*",
-            "arn:aws:dynamodb:us-east-1:${local.account_id}:*/*"
           ]
         }
       ]
@@ -128,8 +121,8 @@ resource "aws_iam_role" "autoscaling_role" {
           ]
           Effect = "Allow"
           Resource = [
-            "arn:aws:ecs:us-east-1:${local.account_id}:*/*",
-            "arn:aws:cloudwatch:us-east-1:${local.account_id}:*/*"
+            "arn:aws:ecs:${var.aws_region}:${local.account_id}:*/*",
+            "arn:aws:cloudwatch:${var.aws_region}:${local.account_id}:*/*"
           ]
         }
       ]

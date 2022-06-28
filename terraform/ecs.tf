@@ -27,6 +27,13 @@ resource "aws_security_group" "ecs_sg" {
     self      = true
   }
 
+  ingress {
+    protocol    = "tcp"
+    from_port   = 5432
+    to_port     = 5432
+    cidr_blocks = [var.vpc_cidr_block]
+  }
+
   egress {
     protocol    = "-1"
     from_port   = 0

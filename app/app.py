@@ -33,8 +33,7 @@ def index(_):
         db.session.add(entry)
         db.session.commit()
     except Exception as e:
-        raise Exception("Unable to add record in database")
-
+        raise Exception("Unable to add a record in database")
 
 
     entries = AccessEntry.query.order_by(AccessEntry.access_time.desc()).limit(10)
@@ -60,7 +59,7 @@ def health():
 
 
 def main():
-    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
     app.run(host='0.0.0.0', port=5000)
 
 
