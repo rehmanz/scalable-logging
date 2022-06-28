@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 import json
+import logging
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,7 +20,6 @@ class AccessEntry(db.Model):
     access_time = db.Column(db.DateTime, default=datetime.utcnow)
     path = db.Column(db.String(1024))
 
-
 @app.errorhandler(404)
 def index(_):
     remote_addr = request.remote_addr
@@ -28,8 +28,13 @@ def index(_):
     path = request.path
 
     entry = AccessEntry(ip=remote_addr, xff=xff, user_agent=user_agent, path=path)
-    db.session.add(entry)
-    db.session.commit()
+    logging.debug("entry: %s" %entry)
+    try:
+        db.session.add(entry)
+        db.session.commit()
+    except Exception as e:
+        raise Exception("Unable to add a record in database")
+
 
     entries = AccessEntry.query.order_by(AccessEntry.access_time.desc()).limit(10)
     ret = [
@@ -48,10 +53,13 @@ def index(_):
 
 @app.route("/_healthz")
 def health():
-    return json.dumps({"status": "HEALTHY", "count": AccessEntry.query.count()})
+    msg = json.dumps({"status": "HEALTHY", "count": AccessEntry.query.count()})
+    logging.debug("msg: %s" %msg)
+    return msg
 
 
 def main():
+    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
     app.run(host='0.0.0.0', port=5000)
 
 

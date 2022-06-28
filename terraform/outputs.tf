@@ -1,23 +1,26 @@
-output "rds_hostname" {
-  description = "RDS instance hostname"
+output "db_hostname" {
+  description = "Database instance hostname"
   value       = aws_db_instance.slogging_db.address
-  sensitive   = true
 }
 
-output "rds_port" {
-  description = "RDS instance port"
+output "db_port" {
+  description = "DB instance port"
   value       = aws_db_instance.slogging_db.port
-  sensitive   = true
 }
 
-output "rds_username" {
-  description = "RDS instance root username"
+output "db_username" {
+  description = "Database instance root username"
   value       = aws_db_instance.slogging_db.username
   sensitive   = true
 }
 
-output "rds_password" {
-  description = "RDS instance root password"
+output "db_password" {
+  description = "Database instance root password"
   value       = aws_db_instance.slogging_db.password
   sensitive   = true
+}
+
+output "app_dns_name" {
+  description = "Application DNS name"
+  value       = aws_lb.main.dns_name
 }
