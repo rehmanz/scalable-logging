@@ -39,21 +39,12 @@ GitHub [Actions](https://github.com/rehmanz/aws-microservice/actions) was used t
 
 * Pre-commit hooks were used for linting, formatting and validating application and infrastructure code
 * Basic logging and exception handling was added to app.py for debugging
-* GitHub Actions was used to build the container and setup docker compose environment for unit testing. Subsequently, pytest was used to check application endpoints locally before pushing the code to a predefined AWS Elastic Container Registry
-* Enhancements
-  * Git tagging needs to be incorporated for proper versioning
+* GitHub Actions was used to build the container and setup docker compose environment for unit testing. Subsequently, pytest was used to check application endpoints locally before pushing the image to a predefined AWS Elastic Container Registry
 
 
 #### Deploy
 * Terraform was with an S3 bucket as the backend
 * Sensitive secrets were fetched as environment variables from GitHub secrets
-* Enhancements
-  * Enable S3 bucket versioning
-  * Container should use role based access for Postgres
-  * Monitoring
-    * PgAnalyze for monitoring Postgres DB
-    * Data Dog for logs & metrics
-    * Integrate Locust for scale-out and scale-in testing
 
 
 ## Terraform Infrastructure
@@ -72,3 +63,17 @@ Postgres database is only accessible via private subnets.
 * Secrets are stored securely as environment variables in local environment and as secrets in GitHub Actions
 * Application is only accessible via a load balancer
 * Direct access to database is not allowed
+
+## Enhancements
+
+* Versioning
+  * Git tagging needs to be incorporated for proper versioning
+
+* Deployment
+  * Enable S3 bucket versioning
+  * Container should use role based access for Postgres
+
+* Monitoring
+  * PgAnalyze for monitoring Postgres DB
+  * Data Dog for logs & metrics
+  * Integrate Locust for scale-out and scale-in testing
